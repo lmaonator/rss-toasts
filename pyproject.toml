@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "rss-toasts"
+version = "0.1.0"
+description = ""
+authors = ["lmaonator <lmaonator@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+rss-toasts = "rss_toasts.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+feedparser = "^6.0.10"
+platformdirs = "^3.10.0"
+pystray = "^0.19.4"
+requests = "^2.31.0"
+windows-toasts = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"

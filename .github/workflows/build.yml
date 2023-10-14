@@ -1,0 +1,34 @@
+---
+name: Build release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  poetry-build:
+    name: Build release with Poetry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 - -y
+
+      - name: Update PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Build project for distribution
+        run: poetry build
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-dist
+          path: dist/
