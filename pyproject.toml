@@ -1,9 +1,19 @@
 [tool.poetry]
 name = "rss-toasts"
 version = "0.1.0"
-description = ""
+description = "RSS toast notifications for Windows"
+license = "MIT"
 authors = ["lmaonator <lmaonator@gmail.com>"]
 readme = "README.md"
+repository = "https://github.com/lmaonator/rss-toasts"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Natural Language :: English",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: Microsoft :: Windows :: Windows 11",
+    "Topic :: Internet :: WWW/HTTP",
+]
 
 [tool.poetry.scripts]
 rss-toasts = "rss_toasts.main:main"
