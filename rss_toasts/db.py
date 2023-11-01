@@ -144,3 +144,17 @@ class Database:
                 (entry.id,),
             ).fetchone()
             return row is not None
+
+    def get_recent_entries(self, feed: Feed, limit: int = 10) -> list[Entry]:
+        return [
+            Entry(**row)
+            for row in self.conn.execute(
+                """
+                SELECT * FROM entries
+                    WHERE feed_url = ?
+                    ORDER BY published_timestamp DESC
+                    LIMIT ?
+                """,
+                (feed.url, limit),
+            )
+        ]

@@ -1,5 +1,7 @@
 import gc
 import time
+import webbrowser
+from datetime import datetime
 from tkinter import BooleanVar, IntVar, StringVar, Tk, messagebox, simpledialog, ttk
 from typing import Any
 
@@ -76,6 +78,18 @@ class FeedsGui(Tk):
         )
         self.form_btn_del.grid(row=4, column=1, sticky="e")
 
+        # Recent feed entries
+        ttk.Label(form_frm, text="Recent entries (double-click to open):").grid(
+            row=5, column=0, columnspan=2, sticky="we", pady=(10, 0)
+        )
+        tree = ttk.Treeview(form_frm, columns=("published", "title"), show="headings")
+        tree.grid(row=6, column=0, columnspan=2, sticky="we")
+        tree.column("published", width=125, stretch=False)
+        tree.heading("published", text="Published")
+        tree.heading("title", text="Title")
+        tree.bind("<Double-Button-1>", self.feed_entry_double_clicked)
+        self.feed_entries_treeview = tree
+
         # Add and Close Buttons
         ctrl_frm = ttk.Frame(frm)
         ctrl_frm.grid(row=2, column=0, sticky="wes")
@@ -97,7 +111,7 @@ class FeedsGui(Tk):
         form_frm.columnconfigure(1, weight=1)
         ctrl_frm.columnconfigure(1, weight=1)
 
-        self.center_window(640, 250)
+        self.center_window(640, 500)
         self.focus_force()
 
     def destroy(self) -> None:
@@ -124,11 +138,37 @@ class FeedsGui(Tk):
         else:
             self.update_feeds()
 
+    def feed_entry_double_clicked(self, event: Any):
+        feed = self.get_feed_by_url()
+        if not feed:
+            self.update_feeds()
+            return
+
+        focused_id = self.feed_entries_treeview.focus()
+        entry = next(
+            (entry for entry in self.feed_entries if entry.id == focused_id), None
+        )
+        if entry:
+            if feed.notify_with_guid:
+                url = entry.id
+            else:
+                url = entry.link
+            webbrowser.open(url)
+
     def populate_form(self, feed: Feed):
         self.form_url.set(feed.url)
         self.form_update_interval.set(feed.update_interval)
         self.form_enabled.set(feed.enabled)
         self.form_notify_with_guid.set(feed.notify_with_guid)
+        self.feed_entries_treeview.delete(*self.feed_entries_treeview.get_children())
+        self.feed_entries = self.db.get_recent_entries(feed)
+        for entry in self.feed_entries:
+            self.feed_entries_treeview.insert(
+                "",
+                "end",
+                entry.id,
+                values=(datetime.fromtimestamp(entry.published_timestamp), entry.title),
+            )
 
     def update_feeds(self, select: str | None = None):
         self.feeds = self.db.get_feeds()

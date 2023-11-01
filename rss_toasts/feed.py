@@ -32,7 +32,7 @@ class Entry:
     feed_url: str
     title: str
     link: str
-    description: str
+    description: str = ""
     published_timestamp: int = 0
     published: time.struct_time | None = None
 
