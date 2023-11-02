@@ -18,10 +18,16 @@ Install using [pipx](https://pypa.github.io/pipx/):
 pipx install rss-toasts
 ```
 
-Run it:
+Run it with console output:
 
 ```console
 rss-toasts
+```
+
+Run it in the background without console window:
+
+```console
+rss-toasts-bg
 ```
 
 The script will start minimized to the system tray.

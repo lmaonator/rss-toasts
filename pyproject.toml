@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rss-toasts"
-version = "0.1.0"
+version = "0.2.0"
 description = "RSS toast notifications for Windows"
 license = "MIT"
 authors = ["lmaonator <lmaonator@gmail.com>"]
@@ -17,6 +17,7 @@ classifiers = [
 
 [tool.poetry.scripts]
 rss-toasts = "rss_toasts.main:main"
+rss-toasts-bg = "rss_toasts.bg:run_in_background"
 
 [tool.poetry.dependencies]
 python = "^3.11"
