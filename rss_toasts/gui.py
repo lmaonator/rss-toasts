@@ -1,4 +1,5 @@
 import gc
+import importlib.resources
 import time
 import webbrowser
 from datetime import datetime
@@ -21,6 +22,9 @@ class FeedsGui(Tk):
 
         super().__init__()
         self.title("rss-toasts - Feeds")
+        self.iconbitmap(  # type: ignore
+            default=importlib.resources.files("rss_toasts").joinpath("icon.ico")
+        )
         frm = ttk.Frame(self, padding=10)
         frm.grid(column=0, row=0, sticky="nsew")
 
