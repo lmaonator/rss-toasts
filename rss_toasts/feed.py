@@ -74,7 +74,7 @@ class Feed:
                 feed_url=self.url,
                 title=entry.title,  # type: ignore
                 link=entry.link,  # type: ignore
-                description=entry.description,  # type: ignore
+                description=entry.get("description", ""),  # type: ignore
                 published=entry.published_parsed,  # type: ignore
             )
             for entry in entries  # type: ignore
