@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rss-toasts"
-version = "0.2.0"
+version = "0.2.1"
 description = "RSS toast notifications for Windows"
 license = "MIT"
 authors = ["lmaonator <lmaonator@gmail.com>"]
