@@ -40,6 +40,8 @@ def icon_setup(icon: pystray.Icon, exit_event: Event):
         while not exit_event.is_set():
             with Database() as db:
                 for feed in db.get_feeds():
+                    if not feed.enabled:
+                        continue
                     if time.time() < feed.last_updated + feed.update_interval:
                         continue
                     _print(f"Updating feed: {feed.url}")
